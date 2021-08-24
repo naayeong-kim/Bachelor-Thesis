@@ -19,7 +19,7 @@
 <img src="img/matadata.png"/> <br/><br/>
 
 - Benign vs. Malignant samples in image data: <br/>
-<img src="img/benign.png" width="400" height="400"/> <img src="img/malignant.png" width="400" height="400"/> <br/>
+<img src="img/benign.png" width="400" height="400"/>     <img src="img/malignant.png" width="400" height="400"/> <br/>
 
 ## Pre-Processing
 
@@ -28,8 +28,8 @@
 주어진 트레이닝 세트에 있는 두 클래스간의 큰 샘플 수 차이는 과적합을 유발합니다. 이는 훈련 시 모든 데이터를 양성으로만 분류하는 문제를 발생시키므로, re-sampling을 통해 소수 클래스의 샘플을 복사하여 표본의 수를 직접 조정하는 오버 샘플링 방식을 사용하였습니다. 샘플의 무작위 복제를 위해 Python Scikit-Learn 라이브러리에서 제공하는 resampling module이 사용되었습니다.<br/>
 
 - Changes  in  sample  distribution  between  classes  depending  onoversampling: <br/>
-  - original data distribution: <br/> <img src="img/org.png" width="400" height="400"/> <br/>
-  - oversampled data distribution: <br/> <img src="img/ovrsmpl.png" width="400" height="400"/> <br/>
+  - original data distribution: <br/> <img src="img/before.png" width="400" height="400"/> <br/>
+  - oversampled data distribution: <br/> <img src="img/after.png" width="400" height="400"/> <br/>
 
 ### 2. Data Augmentation
 
