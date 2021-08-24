@@ -16,7 +16,7 @@
 본 연구에서는 ISIC에서 제공하는 2020 공개 피부 병변 이미지 데이터를 사용하였습니다. 해당 데이터를 병변 부위를 기준으로 정사각형으로 자른 뒤 128x128 크기로 조정된 이미지 셋을 활용하였습니다. 데이터에는 환자의 피부 병변 이미지뿐만 아니라 점의 위치, 환자의 나이 및 성별 등의 메타데이터도 포함되어 있습니다. 그 중 이 프로젝트에서 가장 초점을 맞춘 부분은 malignant/benign 의 이진 분류 형식으로 나타나는 실제 melanoma 여부 입니다.<br/> 
 
 - Metadata: <br/>
-<img src="img/matadata.png"/> <br/><br/>
+<img src="img/metadata.png"/> <br/><br/>
 
 - Benign vs. Malignant samples in image data: <br/>
 <img src="img/benign.png" width="400" height="400"/>     <img src="img/malignant.png" width="400" height="400"/> <br/>
