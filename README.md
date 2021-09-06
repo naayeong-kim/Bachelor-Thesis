@@ -11,7 +11,7 @@
 
 전처리를 통해 주어진 데이터 셋이 가진 클래스 불균형 문제를 해결하고, 백본 아키텍처 모델을 선택하여 해당 모델의 진단 작업에서의 성능을 알아봅니다. 이후 더 나아가서 기존 모델에 새로운 딥러닝 기법인 'Attention mechanisms'을 적용하여, 대체된 레이어를 갖는 모델 아키텍처가 더 나은 성능을 갖는지 확인합니다.<br/>
 
-<img src="img/research_plan.png" width="70%"/> <br/>
+<img src="img/research_plan.png" width="50%"/> <br/>
 
 ## Database
 
