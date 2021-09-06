@@ -11,7 +11,7 @@
 
 전처리를 통해 주어진 데이터 셋이 가진 클래스 불균형 문제를 해결하고, 백본 아키텍처 모델을 선택하여 해당 모델의 진단 작업에서의 성능을 알아봅니다. 이후 더 나아가서 기존 모델에 새로운 딥러닝 기법인 'Attention mechanisms'을 적용하여, 대체된 레이어를 갖는 모델 아키텍처가 더 나은 성능을 갖는지 확인합니다.<br/>
 
-<img src="img/research_plan.png"/> <br/>
+<img src="img/research_plan.png" width="70%"/> <br/>
 
 ## Database
 
@@ -20,8 +20,10 @@
 - Metadata: <br/>
 <img src="img/metadata.png"/> <br/><br/>
 
-- Benign vs. Malignant samples in image data: <br/>
-<img src="img/benign.png" width="300" height="300"/>     <img src="img/malignant.png" width="300" height="300"/> <br/>
+- Random samples' image in dataset: <br/>
+  | Benign samples | Malignant samples |
+  |:--:|:--:|
+  | <img src="img/benign.png" width="80%"> | <img src="img/benign.png" width="80%"> |
 
 ## Pre-Processing
 
@@ -30,6 +32,7 @@
 주어진 트레이닝 세트에 있는 두 클래스간의 큰 샘플 수 차이는 과적합을 유발합니다. 이는 훈련 시 모든 데이터를 양성으로만 분류하는 문제를 발생시키므로, re-sampling을 통해 소수 클래스의 샘플을 복사하여 표본의 수를 직접 조정하는 오버 샘플링 방식을 사용하였습니다. 샘플의 무작위 복제를 위해 Python Scikit-Learn 라이브러리에서 제공하는 resampling module이 사용되었습니다.<br/>
 
 - Changes  in  sample  distribution  between  classes  depending  onoversampling: <br/>
+
   | original data distribution | oversampled data distribution |
   |:--:|:--:|
   | <img src="img/before.png" width="80%"> | <img src="img/after.png" width="80%"> |
