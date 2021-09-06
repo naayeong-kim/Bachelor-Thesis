@@ -114,7 +114,7 @@ class AttConv(nn.Module):
 
 이전의 예상과 달리, 주의 매커니즘을 적용할 때 더 진단에 용이하다는 눈에 띄는 유효한 결과를 얻지 못했으므로, 실제로 모델간의 명확한 성능 차이를 알아볼 필요가 있습니다. 따라서 Mcnemar's test를 이용하여 백본 모델과 주의 매커니즘이 적용된 모델 간의 성능차이를 살펴보았습니다. 다음은 original AllConvNet 과 Attentional AllConvNet을 비교한 contingency를 나타냅니다.<br/>
 
-<img src="img/mcnemar.png" width="70%"/> <br/><br/>
+<img src="img/mcnemar.png" width="50%"/> <br/><br/>
 
 
 ## Result
