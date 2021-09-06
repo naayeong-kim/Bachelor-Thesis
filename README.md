@@ -28,8 +28,10 @@
 주어진 트레이닝 세트에 있는 두 클래스간의 큰 샘플 수 차이는 과적합을 유발합니다. 이는 훈련 시 모든 데이터를 양성으로만 분류하는 문제를 발생시키므로, re-sampling을 통해 소수 클래스의 샘플을 복사하여 표본의 수를 직접 조정하는 오버 샘플링 방식을 사용하였습니다. 샘플의 무작위 복제를 위해 Python Scikit-Learn 라이브러리에서 제공하는 resampling module이 사용되었습니다.<br/>
 
 - Changes  in  sample  distribution  between  classes  depending  onoversampling: <br/>
-  - original data distribution: <br/> <img src="img/before.png" width="400" height="400"/> <br/>
-  - oversampled data distribution: <br/> <img src="img/after.png" width="400" height="400"/> <br/>
+  | original data distribution | oversampled data distribution |
+  |:--:|:--:|
+  | <img src="img/before.png" width="80%"> | <img src="img/after.png" width="80%"> |
+  
 
 ### 2. Data Augmentation
 
@@ -43,17 +45,18 @@
 
 ### 1. AlexNet
 
-<img src="img/alexnet.png"/> <br/>
+<img src="img/alexnet.png" width="70%"/> <br/>
 
 ### 2. AllConvNet
 
-<img src="img/allconvnet.png"/> <br/>
+<img src="img/allconvnet.png" width="70%"/> <br/>
 
 ## Attention Mechanisms on AllConvNet
 
 Attention mechanisms은 현재 자연어처리(NLP)에서 주목받고 있는 인기있는 메커니즘 중 하나입니다. 이 프로젝트에서는 자연어 처리가 아닌 컴퓨터 비전을 위한 새로운 attention layer를 구성합니다. 이후, 백본 모델(AllConvNet)의 첫번째 컨볼루션 레이어를 새롭게 구성한 attention convolution layer로 대체시킵니다. 즉, 새로 구성된 모델의 구조는 첫번째 레이어만 Attention layer로 대체되었다는 점을 제외하고 나머지 구조나 입출력 채널의 수, 커널 크기 등 모두 백본 모델과 완전히 동일합니다.
 
 #### >> Attention convolution layer
+
 ```python
 class AttConv(nn.Module):
     def __init__(self, num_in_chan=1, num_out_chan=6, kernel_size=5, stride=1):
@@ -105,7 +108,7 @@ class AttConv(nn.Module):
 
 이전의 예상과 달리, 주의 매커니즘을 적용할 때 더 진단에 용이하다는 눈에 띄는 유효한 결과를 얻지 못했으므로, 실제로 모델간의 명확한 성능 차이를 알아볼 필요가 있습니다. 따라서 Mcnemar's test를 이용하여 백본 모델과 주의 매커니즘이 적용된 모델 간의 성능차이를 살펴보았습니다.<br/>
 
-<img src="img/mcnemar.png"/> <br/>
+<img src="img/mcnemar.png"/ width="70%"> <br/>
 
 위 그림은 original AllConvNet 과 Attentional AllConvNet을 비교한 contingency를 나타냅니다. Mcnemar's test를 수행한 결과 statistic=24.733, p-value=0.0000 이므로 null hypothesis(H0)를 기각합니다. 즉, 두 예측 모델 간 차이가 없다고 가정하지 않습니다.<br/>
 
