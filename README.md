@@ -19,7 +19,7 @@
 <img src="img/metadata.png"/> <br/><br/>
 
 - Benign vs. Malignant samples in image data: <br/>
-<img src="img/benign.png" width="400" height="400"/>     <img src="img/malignant.png" width="400" height="400"/> <br/>
+<img src="img/benign.png" width="300" height="300"/>     <img src="img/malignant.png" width="300" height="300"/> <br/>
 
 ## Pre-Processing
 
