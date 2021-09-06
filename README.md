@@ -45,20 +45,60 @@
 
 <img src="img/alexnet.png"/> <br/>
 
-#### >> Result
-
 ### 2. AllConvNet
 
 <img src="img/allconvnet.png"/> <br/>
-
-#### >> Result
 
 ## Attention Mechanisms on AllConvNet
 
 Attention mechanisms은 현재 자연어처리(NLP)에서 주목받고 있는 인기있는 메커니즘 중 하나입니다. 이 프로젝트에서는 자연어 처리가 아닌 컴퓨터 비전을 위한 새로운 attention layer를 구성합니다. 이후, 백본 모델(AllConvNet)의 첫번째 컨볼루션 레이어를 새롭게 구성한 attention convolution layer로 대체시킵니다. 즉, 새로 구성된 모델의 구조는 첫번째 레이어만 Attention layer로 대체되었다는 점을 제외하고 나머지 구조나 입출력 채널의 수, 커널 크기 등 모두 백본 모델과 완전히 동일합니다.
 
+#### >> Attention layer
+```python
+class AttConv(nn.Module):
+    def __init__(self, num_in_chan=1, num_out_chan=6, kernel_size=5, stride=1):
+        super(AttConv, self).__init__()
+        self.kernel_size=kernel_size
+        self.num_in_chan=num_in_chan
+        self.num_out_chan=num_out_chan
+        self.stride=stride
+        self.BU_weights = nn.Parameter(torch.HalfTensor(1,num_in_chan*kernel_size**2, 1, num_out_chan))
+        init.kaiming_uniform_(self.BU_weights, a=np.sqrt(5))
+        self.TD_weights = nn.Parameter(self.BU_weights.data.detach().clone())
+        
+        self.BU_bias = nn.Parameter(torch.randn(1,1,1,num_out_chan)*0.1)
+        self.TD_bias = nn.Parameter(torch.randn(1,num_in_chan,1,1)*0.1)
+        
+    def normalize_att_weights(self, in_spat_dim):
+        batch_size = self.att_weights.shape[0]        
+        num_wins = self.att_weights.shape[-1]
+        aw_sum = F.unfold(F.fold(self.att_weights, in_spat_dim, self.kernel_size,stride=self.stride), self.kernel_size, stride=self.stride) #Fold into image domain (which automatically computes the sum per pixel), and then unfold again into conv windows    
+        self.att_weights = self.att_weights/aw_sum #Normalize weights by their sum over possible parents
+        self.att_weights = self.att_weights.view(batch_size, 1, self.kernel_size**2, num_wins).expand(batch_size, self.num_in_chan, self.kernel_size**2, num_wins).reshape(batch_size, self.num_in_chan*self.kernel_size**2, num_wins)
+        
+        
+    def forward(self, x, num_iter=4):
+        batch_size = x.shape[0]
+        device = x.device
+        in_spat_dim = list(x.shape[-2:])                
+        assert in_spat_dim[0]==in_spat_dim[1], 'Only square images are supported'
+        x_wins = F.unfold(x.view(batch_size,self.num_in_chan,*in_spat_dim), self.kernel_size, stride=self.stride)
+        x_wins = x_wins.type(torch.half)
+        out_spat_dim = np.int(np.sqrt(x_wins.shape[-1]))
+        self.att_weights = torch.ones([batch_size, self.kernel_size**2, x_wins.shape[-1]], device=device, dtype=torch.half)        
+        self.normalize_att_weights(in_spat_dim)
+        
+        
+        for i in range(num_iter):
+            y = F.relu((x_wins.unsqueeze(-1)*self.att_weights.unsqueeze(-1)*self.BU_weights).sum(1,True) + self.BU_bias)
+            pred = (y*self.TD_weights).sum(-1).view(batch_size,self.num_in_chan,self.kernel_size**2, -1) + self.TD_bias            
+            self.att_weights = ((pred*x_wins.view(batch_size,self.num_in_chan,self.kernel_size**2, -1)).sum(1) / np.sqrt(self.num_in_chan)).exp()
+            self.normalize_att_weights(in_spat_dim)   
 
-#### >> Result
+        y = y.view(batch_size, out_spat_dim, out_spat_dim, self.num_out_chan).permute(0,3,1,2)
+        
+        return y
+```
 
 
 ## Evaluation
@@ -70,5 +110,8 @@ Attention mechanisms은 현재 자연어처리(NLP)에서 주목받고 있는 �
 위 그림은 original AllConvNet 과 Attentional AllConvNet을 비교한 contingency를 나타냅니다. Mcnemar's test를 수행한 결과 statistic=24.733, p-value=0.0000 이므로 null hypothesis(H0)를 기각합니다. 즉, 두 예측 모델 간 차이가 없다고 가정하지 않습니다.<br/>
 
 
+## Result
+
+더 자세한 결과 및 고찰은 [full report](report.pdf)를 참조하시기 바랍니다.
 
 
