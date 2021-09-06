@@ -23,7 +23,7 @@
 - Random samples' image in dataset: <br/>
   | Benign samples | Malignant samples |
   |:--:|:--:|
-  | <img src="img/benign.png" width="80%"> | <img src="img/benign.png" width="80%"> |
+  | <img src="img/benign.png" width="80%"> | <img src="img/malignant.png" width="80%"> |
 
 ## Pre-Processing
 
